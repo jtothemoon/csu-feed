@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="relative w-full max-w-[350px] h-[45px] group">
         <div className="absolute inset-0 bg-white rounded-[9px] shadow-[0px_2px_2px_rgba(0,0,0,0.18)] border border-shaded-white focus-within:border-light-blue transition-colors">
-          <div className="absolute left-[10px] top-[10px] flex flex-row items-center gap-[5px]">
+          <div className="absolute left-2.5 top-2.5 flex flex-row items-center gap-[5px]">
             {icon && <div className="w-[26px] h-[26px] flex-none">{icon}</div>}
           </div>
           <input
@@ -19,8 +19,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               "absolute inset-0 bg-transparent border-none outline-none",
               "text-pale-gray text-xs font-medium",
-              "px-[10px] py-[10px]",
-              icon ? "pl-[46px]" : "pl-[10px]",
+              "px-2.5 py-2.5",
+              icon ? "pl-[46px]" : "pl-2.5",
               "placeholder:text-pale-gray placeholder:text-xs placeholder:font-medium",
               "focus:text-tinted-black focus:placeholder:text-tinted-black",
               className

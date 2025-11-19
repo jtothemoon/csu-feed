@@ -14,8 +14,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "flex flex-row justify-center items-center",
           "w-[150px] h-[45px]",
-          "px-[11px] py-[7px] gap-[10px]",
-          "rounded-[8px]",
+          "px-[11px] py-[7px] gap-2.5",
+          "rounded-lg",
           "font-bold text-sm leading-[17px]",
           "shadow-[1px_2px_2px_rgba(0,0,0,0.4)]",
           "transition-all",

@@ -1,26 +1,21 @@
-import Image from "next/image";
+import { MainLayout } from "@/components/layout/MainLayout";
+import { Header } from "@/components/header";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white flex items-center justify-center p-5">
-      <div className="w-full max-w-md mx-auto text-center">
-        <Image
-          src="/logo.png"
-          alt="CSU Feed"
-          width={0}
-          height={0}
-          sizes="200px"
-          style={{ width: "200px", height: "auto" }}
-          loading="eager"
-          className="mx-auto mb-8"
-        />
-        <h1 className="text-2xl font-bold text-tinted-black mb-4">
-          멘토링 & 특강 피드백
-        </h1>
-        <p className="text-medium-gray mb-8">
-          진행된 이벤트 목록이 여기에 표시됩니다.
-        </p>
+    <MainLayout>
+      <div className="flex flex-col gap-10">
+        {/* Header */}
+        <Header />
+
+        {/* Content */}
+        <section className="grid grid-cols-2 gap-4">
+          {/* Event Cards */}
+          <div className="col-span-2 text-center py-8 text-medium-gray text-sm">
+            이벤트 카드가 여기에 표시됩니다
+          </div>
+        </section>
       </div>
-    </main>
+    </MainLayout>
   );
 }
