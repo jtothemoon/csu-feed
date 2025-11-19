@@ -1,5 +1,6 @@
 import { MainLayout } from "@/components/layout/MainLayout";
 import { Header } from "@/components/header";
+import { Card } from "@/components/ui/card";
 
 export default function Home() {
   return (
@@ -9,11 +10,22 @@ export default function Home() {
         <Header />
 
         {/* Content */}
-        <section className="grid grid-cols-2 gap-4">
-          {/* Event Cards */}
-          <div className="col-span-2 text-center py-8 text-medium-gray text-sm">
-            이벤트 카드가 여기에 표시됩니다
-          </div>
+        <section className="flex flex-col gap-6">
+          <Card
+            image="/logo.png"
+            title="AI 멘토링"
+            subtitle="2024.01.15"
+          />
+          <Card
+            image="/logo.png"
+            title="웹 개발 특강"
+            subtitle="2024.01.20"
+          />
+          <Card
+            image="/logo.png"
+            title="데이터 분석 세미나"
+            subtitle="2024.01.25"
+          />
         </section>
       </div>
     </MainLayout>

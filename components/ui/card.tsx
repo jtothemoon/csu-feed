@@ -10,9 +10,9 @@ interface CardProps {
 
 export function Card({ image, title, subtitle, className }: CardProps) {
   return (
-    <div className={cn("flex flex-col w-[163px] h-[127px]", className)}>
-      {/* Image */}
-      <div className="relative w-full h-[90px] rounded-t-[10px] overflow-hidden bg-primary">
+    <div className={cn("flex flex-col w-full", className)}>
+      {/* Image - 비율 유지 (90/163 ≈ 55%) */}
+      <div className="relative w-full aspect-[163/90] rounded-t-[10px] overflow-hidden bg-primary">
         <Image
           src={image}
           alt={title}
@@ -21,16 +21,16 @@ export function Card({ image, title, subtitle, className }: CardProps) {
         />
       </div>
 
-      {/* Content */}
-      <div className="relative w-full h-[37px]">
-        <div className="absolute inset-0 bg-white shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-b-[10px]">
+      {/* Content - 비율 유지 (37/163 ≈ 23%) */}
+      <div className="relative w-full aspect-[163/37]">
+        <div className="absolute inset-0 bg-white shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-b-[10px] flex flex-col items-center justify-center gap-1">
           {/* Title */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 font-bold text-[10px] leading-3 text-black">
+          <div className="font-bold text-sm leading-tight text-black">
             {title}
           </div>
 
           {/* Subtitle */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-[18px] font-bold text-xs leading-[15px] text-tinted-gray">
+          <div className="font-bold text-base leading-tight text-tinted-gray">
             {subtitle}
           </div>
         </div>

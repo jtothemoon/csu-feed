@@ -248,7 +248,7 @@ export default function Home() {
                 subtitle="2024.01.15"
               />
               <p className="text-xs text-medium-gray mt-2">
-                163px × 127px (이미지 90px + 컨텐츠 37px)
+                화면 너비에 맞춰 확대 (비율 163:127 유지)
               </p>
             </div>
           </div>
