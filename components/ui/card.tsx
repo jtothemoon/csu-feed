@@ -23,7 +23,7 @@ export function Card({ image, title, subtitle, className }: CardProps) {
 
       {/* Content - 비율 유지 (37/163 ≈ 23%) */}
       <div className="relative w-full aspect-[163/37]">
-        <div className="absolute inset-0 bg-white shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-b-[10px] flex flex-col items-center justify-center gap-1">
+        <div className="absolute inset-0 bg-white shadow-[0px_4px_4px_rgba(0,0,0,0.25)] rounded-b-[10px] flex flex-col items-start justify-center gap-1 px-4">
           {/* Title */}
           <div className="font-bold text-sm leading-tight text-black">
             {title}
