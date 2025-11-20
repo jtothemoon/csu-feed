@@ -31,26 +31,5 @@ export async function proxy(request: NextRequest) {
     }
   );
 
-  // POST /api/feedbacks는 인증 필요
-  if (
-    request.method === "POST" &&
-    request.nextUrl.pathname === "/api/feedbacks"
-  ) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json(
-        { error: "로그인이 필요합니다." },
-        { status: 401 }
-      );
-    }
-  }
-
   return response;
 }
-
-export const config = {
-  matcher: ["/api/feedbacks"],
-};

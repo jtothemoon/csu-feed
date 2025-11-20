@@ -6,6 +6,7 @@ import { Star } from "./ui/star";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { DepartmentIcon } from "./ui/department-icon";
+import { createFeedback } from "@/lib/actions/feedback";
 
 interface FeedbackFormProps {
   open: boolean;
@@ -33,20 +34,15 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/feedbacks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          eventId,
-          content: comment,
-          rating,
-          department: department || null,
-        }),
+      const result = await createFeedback({
+        eventId,
+        content: comment,
+        rating,
+        department: department || undefined,
       });
 
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "피드백 제출 중 오류가 발생했습니다.");
+      if (result.error) {
+        throw new Error(result.error);
       }
 
       // Success - close drawer and reset form
@@ -134,11 +130,11 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
                     required
                   />
                   {/* Resize indicator */}
-                  <div className="absolute bottom-[5px] right-[5px] w-[15px] h-[15px] pointer-events-none">
-                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                      <line x1="10" y1="5" x2="5" y2="10" stroke="#777777" strokeWidth="1" />
-                      <line x1="12" y1="7" x2="7" y2="12" stroke="#777777" strokeWidth="1" />
-                      <line x1="14" y1="9" x2="9" y2="14" stroke="#777777" strokeWidth="1" />
+                  <div className="absolute bottom-[5px] right-[5px] w-4 h-4 pointer-events-none">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <line x1="6.86401" y1="13.7323" x2="13.6569" y2="6.93936" stroke="#777777" strokeLinecap="round"/>
+                      <line x1="11.4568" y1="14.0824" x2="14.4997" y2="11.0395" stroke="#777777" strokeLinecap="round"/>
+                      <line x1="0.5" y1="14.7929" x2="14.7929" y2="0.5" stroke="#777777" strokeLinecap="round"/>
                     </svg>
                   </div>
                 </div>

@@ -2,13 +2,15 @@ import { MainLayout } from "@/components/layout/MainLayout";
 import { Header } from "@/components/header";
 import { Card } from "@/components/ui/card";
 import { formatEventDate } from "@/lib/utils/date";
-import type { Event } from "@/lib/types";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
 export default async function Home() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const res = await fetch(`${baseUrl}/api/events`, { cache: "no-store" });
-  const events: Event[] = res.ok ? await res.json() : [];
+  const supabase = await createClient();
+  const { data: events } = await supabase
+    .from("events")
+    .select("*")
+    .order("start_date", { ascending: false });
 
   return (
     <MainLayout>

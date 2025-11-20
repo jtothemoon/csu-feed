@@ -4,6 +4,7 @@ import { Comment } from "@/components/ui/comment";
 import { FeedbackFABWrapper } from "@/components/feedback-fab-wrapper";
 import { formatEventDate } from "@/lib/utils/date";
 import { notFound } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import type { Event, Feedback } from "@/lib/types";
 
 type Props = {
@@ -12,21 +13,21 @@ type Props = {
 
 export default async function EventDetailPage({ params }: Props) {
   const { id } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const supabase = await createClient();
 
   // 이벤트 및 피드백 데이터 가져오기
-  const [eventRes, feedbacksRes] = await Promise.all([
-    fetch(`${baseUrl}/api/events/${id}`, { cache: "no-store" }),
-    fetch(`${baseUrl}/api/events/${id}/feedbacks`, { cache: "no-store" }),
+  const [eventResult, feedbacksResult] = await Promise.all([
+    supabase.from("events").select("*").eq("id", id).single(),
+    supabase.from("feedbacks").select("*").eq("event_id", id).order("created_at", { ascending: false }),
   ]);
 
   // 이벤트가 없으면 404 페이지 표시
-  if (!eventRes.ok) {
+  if (eventResult.error || !eventResult.data) {
     notFound();
   }
 
-  const event: Event = await eventRes.json();
-  const feedbacks: Feedback[] = feedbacksRes.ok ? await feedbacksRes.json() : [];
+  const event: Event = eventResult.data;
+  const feedbacks: Feedback[] = feedbacksResult.data || [];
 
   return (
     <DetailLayout>
