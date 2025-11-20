@@ -13,7 +13,9 @@ export function FeedbackFABWrapper({ eventId }: FeedbackFABWrapperProps) {
 
   return (
     <>
-      <FAB onClick={() => setOpen(true)} />
+      <div className="absolute bottom-6 right-6">
+        <FAB onClick={() => setOpen(true)} />
+      </div>
       <FeedbackForm open={open} onOpenChange={setOpen} eventId={eventId} />
     </>
   );

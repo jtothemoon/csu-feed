@@ -1,3 +1,4 @@
+import { DetailLayout } from "@/components/layout/DetailLayout";
 import { DetailHeader } from "@/components/detail-header";
 import { Comment } from "@/components/ui/comment";
 import { FeedbackFABWrapper } from "@/components/feedback-fab-wrapper";
@@ -28,14 +29,14 @@ export default async function EventDetailPage({ params }: Props) {
   const feedbacks: Feedback[] = feedbacksRes.ok ? await feedbacksRes.json() : [];
 
   return (
-    <div className="min-h-screen bg-white">
+    <DetailLayout>
       {/* 헤더 */}
       <DetailHeader />
 
       <div className="flex flex-col">
         {/* 이벤트 정보 */}
         <div className="px-6 pt-6 pb-4 flex flex-col gap-2">
-          <h1 className="text-2xl font-bold text-tinted-black">
+          <h1 className="text-xl font-bold text-tinted-black truncate">
             {event.title}
           </h1>
           <div className="flex flex-col gap-1 text-sm text-medium-gray">
@@ -72,6 +73,6 @@ export default async function EventDetailPage({ params }: Props) {
 
       {/* FAB - 피드백 작성 버튼 */}
       <FeedbackFABWrapper eventId={id} />
-    </div>
+    </DetailLayout>
   );
 }

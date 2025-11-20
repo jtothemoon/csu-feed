@@ -8,7 +8,7 @@ export function FAB({ onClick }: FABProps = {}) {
   return (
     <button
       onClick={onClick}
-      className="fixed bottom-6 right-6 flex flex-row justify-center items-center w-[43px] h-[45px] bg-[#0096FF] active:bg-primary shadow-[1px_2px_2px_rgba(0,0,0,0.4)] rounded-[8px] transition-colors z-50"
+      className="flex flex-row justify-center items-center w-[43px] h-[45px] bg-[#0096FF] active:bg-primary shadow-[1px_2px_2px_rgba(0,0,0,0.4)] rounded-[8px] transition-colors"
       aria-label="피드백 작성"
     >
       {/* Pen Icon */}
