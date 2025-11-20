@@ -6,9 +6,10 @@ interface CardProps {
   title: string;
   subtitle: string;
   className?: string;
+  priority?: boolean;
 }
 
-export function Card({ image, title, subtitle, className }: CardProps) {
+export function Card({ image, title, subtitle, className, priority = false }: CardProps) {
   return (
     <div className={cn("flex flex-col w-full", className)}>
       {/* Image - 비율 유지 (90/163 ≈ 55%) */}
@@ -17,6 +18,8 @@ export function Card({ image, title, subtitle, className }: CardProps) {
           src={image}
           alt={title}
           fill
+          sizes="327px"
+          priority={priority}
           className="object-cover"
         />
       </div>

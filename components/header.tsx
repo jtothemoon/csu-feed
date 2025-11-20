@@ -7,11 +7,8 @@ export function Header() {
         <Image
           src="/logo.png"
           alt="CSU Feed"
-          width={0}
-          height={0}
-          sizes="48px"
-          style={{ width: "48px", height: "auto" }}
-          loading="eager"
+          width={48}
+          height={48}
         />
         <span className="text-sm font-medium text-tinted-black">
           조선대학교 소프트웨어중심대학
