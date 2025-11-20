@@ -3,8 +3,7 @@ import { Comment } from "@/components/ui/comment";
 import { FeedbackFABWrapper } from "@/components/feedback-fab-wrapper";
 import { formatEventDate } from "@/lib/utils/date";
 import { notFound } from "next/navigation";
-import type { Event } from "@/lib/types/event";
-import type { Feedback } from "@/lib/types/feedback";
+import type { Event, Feedback } from "@/lib/types";
 
 type Props = {
   params: Promise<{ id: string }>;

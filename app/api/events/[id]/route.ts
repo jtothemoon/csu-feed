@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getEventById } from "@/lib/api/events";
+import { createClient } from "@/lib/supabase/server";
 
 type Params = {
   params: Promise<{ id: string }>;
@@ -12,16 +12,22 @@ type Params = {
 export async function GET(request: Request, { params }: Params) {
   try {
     const { id } = await params;
-    const event = await getEventById(id);
+    const supabase = await createClient();
 
-    if (!event) {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
       return NextResponse.json(
         { error: "Event not found" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(event);
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error in GET /api/events/[id]:", error);
     return NextResponse.json(

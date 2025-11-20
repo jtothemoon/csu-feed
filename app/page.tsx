@@ -2,7 +2,7 @@ import { MainLayout } from "@/components/layout/MainLayout";
 import { Header } from "@/components/header";
 import { Card } from "@/components/ui/card";
 import { formatEventDate } from "@/lib/utils/date";
-import type { Event } from "@/lib/types/event";
+import type { Event } from "@/lib/types";
 import Link from "next/link";
 
 export default async function Home() {
@@ -19,7 +19,7 @@ export default async function Home() {
         {/* Content */}
         <section className="flex flex-col gap-6">
           {events && events.length > 0 ? (
-            events.map((event: Event, index: number) => (
+            events.map((event, index) => (
               <Link key={event.id} href={`/events/${event.id}`}>
                 <Card
                   image={event.image_url || "https://placehold.co/600x400/0033A0/white?text=Event"}

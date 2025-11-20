@@ -1,5 +1,17 @@
 import { NextResponse } from "next/server";
-import { submitFeedback } from "@/lib/api/feedbacks";
+import { createClient } from "@/lib/supabase/server";
+
+/**
+ * 이메일을 SHA-256 해시로 변환
+ */
+async function hashEmail(email: string): Promise<string> {
+  const normalized = email.toLowerCase().trim();
+  const msgBuffer = new TextEncoder().encode(normalized);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+  return hashHex;
+}
 
 /**
  * POST /api/feedbacks
@@ -7,11 +19,23 @@ import { submitFeedback } from "@/lib/api/feedbacks";
  */
 export async function POST(request: Request) {
   try {
+    const supabase = await createClient();
+
+    // TODO: 세션에서 이메일 가져오기
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user || !user.email) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
-    const { eventId, email, content, rating, department } = body;
+    const { eventId, content, rating } = body;
 
     // Validation
-    if (!eventId || !email || !content || !rating) {
+    if (!eventId || !content || !rating) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -25,40 +49,37 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!email.includes("@")) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
-    }
+    const emailHash = await hashEmail(user.email);
 
-    // TODO: Get email from authenticated session instead of request body
-    const feedback = await submitFeedback({
-      eventId,
-      email,
-      content,
-      rating,
-      department,
-    });
+    const { data, error } = await supabase
+      .from("feedbacks")
+      .insert({
+        event_id: eventId,
+        email_hash: emailHash,
+        content,
+        rating,
+      })
+      .select()
+      .single();
 
-    return NextResponse.json(feedback, { status: 201 });
-  } catch (error) {
-    console.error("Error in POST /api/feedbacks:", error);
-
-    if (error instanceof Error) {
+    if (error) {
       // 중복 제출 에러
-      if (error.message.includes("이미")) {
+      if (error.code === "23505") {
         return NextResponse.json(
-          { error: error.message },
+          { error: "이미 이 이벤트에 피드백을 작성하셨습니다." },
           { status: 409 }
         );
       }
+      console.error("Error creating feedback:", error);
       return NextResponse.json(
-        { error: error.message },
-        { status: 400 }
+        { error: "Failed to create feedback" },
+        { status: 500 }
       );
     }
 
+    return NextResponse.json(data, { status: 201 });
+  } catch (error) {
+    console.error("Error in POST /api/feedbacks:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

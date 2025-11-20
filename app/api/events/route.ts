@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getEvents } from "@/lib/api/events";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * GET /api/events
@@ -7,16 +7,22 @@ import { getEvents } from "@/lib/api/events";
  */
 export async function GET() {
   try {
-    const events = await getEvents();
+    const supabase = await createClient();
 
-    if (!events) {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .order("start_date", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching events:", error);
       return NextResponse.json(
         { error: "Failed to fetch events" },
         { status: 500 }
       );
     }
 
-    return NextResponse.json(events);
+    return NextResponse.json(data || []);
   } catch (error) {
     console.error("Error in GET /api/events:", error);
     return NextResponse.json(
