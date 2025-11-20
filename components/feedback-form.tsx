@@ -30,40 +30,37 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
       return;
     }
 
-    // TODO: Auth 구현 후 세션에서 이메일 가져오기
-    setError("피드백 제출은 로그인 후 이용 가능합니다.");
-    return;
+    setIsSubmitting(true);
 
-    // 아래 코드는 Auth 구현 후 활성화
-    // setIsSubmitting(true);
-    // try {
-    //   const res = await fetch("/api/feedbacks", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       eventId,
-    //       email, // TODO: 세션에서 가져오기
-    //       content: comment,
-    //       rating,
-    //       department: department || undefined,
-    //     }),
-    //   });
-    //
-    //   if (!res.ok) {
-    //     const error = await res.json();
-    //     throw new Error(error.error || "피드백 제출 중 오류가 발생했습니다.");
-    //   }
-    //
-    //   onOpenChange(false);
-    //   setDepartment("");
-    //   setRating(0);
-    //   setComment("");
-    //   window.location.reload();
-    // } catch (err) {
-    //   setError(err instanceof Error ? err.message : "피드백 제출 중 오류가 발생했습니다.");
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
+    try {
+      const res = await fetch("/api/feedbacks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          eventId,
+          content: comment,
+          rating,
+        }),
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "피드백 제출 중 오류가 발생했습니다.");
+      }
+
+      // Success - close drawer and reset form
+      onOpenChange(false);
+      setDepartment("");
+      setRating(0);
+      setComment("");
+
+      // Reload to show new feedback
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "피드백 제출 중 오류가 발생했습니다.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
