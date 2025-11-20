@@ -14,8 +14,49 @@ async function hashEmail(email: string): Promise<string> {
 }
 
 /**
- * POST /api/feedbacks
- * 피드백 생성 (TODO: 인증 필요)
+ * @swagger
+ * /api/feedbacks:
+ *   post:
+ *     summary: 피드백 생성
+ *     description: 새로운 피드백을 생성합니다. 로그인 필요.
+ *     tags:
+ *       - Feedbacks
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - eventId
+ *               - content
+ *               - rating
+ *             properties:
+ *               eventId:
+ *                 type: string
+ *                 description: 이벤트 ID
+ *               content:
+ *                 type: string
+ *                 description: 피드백 내용
+ *               rating:
+ *                 type: integer
+ *                 minimum: 1
+ *                 maximum: 5
+ *                 description: 평점 (1-5)
+ *               department:
+ *                 type: string
+ *                 description: 학과 (선택)
+ *     responses:
+ *       201:
+ *         description: 생성 성공
+ *       400:
+ *         description: 잘못된 요청
+ *       401:
+ *         description: 인증 필요
+ *       409:
+ *         description: 중복 제출
  */
 export async function POST(request: Request) {
   try {

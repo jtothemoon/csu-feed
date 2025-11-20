@@ -6,8 +6,25 @@ type Params = {
 };
 
 /**
- * GET /api/events/[id]
- * 특정 이벤트 조회
+ * @swagger
+ * /api/events/{id}:
+ *   get:
+ *     summary: 이벤트 상세 조회
+ *     description: 특정 이벤트의 상세 정보를 반환합니다
+ *     tags:
+ *       - Events
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: 이벤트 ID
+ *     responses:
+ *       200:
+ *         description: 성공
+ *       404:
+ *         description: 이벤트를 찾을 수 없음
  */
 export async function GET(request: Request, { params }: Params) {
   try {

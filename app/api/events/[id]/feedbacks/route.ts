@@ -6,8 +6,25 @@ type Params = {
 };
 
 /**
- * GET /api/events/[id]/feedbacks
- * 특정 이벤트의 피드백 목록 조회
+ * @swagger
+ * /api/events/{id}/feedbacks:
+ *   get:
+ *     summary: 피드백 목록 조회
+ *     description: 특정 이벤트의 모든 피드백을 최신순으로 반환합니다
+ *     tags:
+ *       - Feedbacks
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: 이벤트 ID
+ *     responses:
+ *       200:
+ *         description: 성공
+ *       500:
+ *         description: 서버 오류
  */
 export async function GET(request: Request, { params }: Params) {
   try {

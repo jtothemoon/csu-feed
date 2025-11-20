@@ -2,8 +2,18 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * GET /api/events
- * 이벤트 목록 조회
+ * @swagger
+ * /api/events:
+ *   get:
+ *     summary: 이벤트 목록 조회
+ *     description: 모든 이벤트를 최신순으로 반환합니다
+ *     tags:
+ *       - Events
+ *     responses:
+ *       200:
+ *         description: 성공
+ *       500:
+ *         description: 서버 오류
  */
 export async function GET() {
   try {
