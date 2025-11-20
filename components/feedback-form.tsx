@@ -65,9 +65,9 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
   };
 
   return (
-    <Drawer.Root open={open} onOpenChange={onOpenChange}>
+    <Drawer.Root open={open} onOpenChange={onOpenChange} modal={true}>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/40 z-40" />
+        <Drawer.Overlay className="fixed inset-0 bg-black/40 z-40" onClick={() => onOpenChange(false)} />
         <Drawer.Content className="bg-white flex flex-col rounded-t-[12px] h-[565px] mt-24 fixed bottom-0 left-0 right-0 z-50 shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
           {/* Drag Handle */}
           <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-pale-gray mt-4" />
