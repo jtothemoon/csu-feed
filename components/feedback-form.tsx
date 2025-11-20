@@ -40,6 +40,7 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
           eventId,
           content: comment,
           rating,
+          department: department || null,
         }),
       });
 
@@ -124,13 +125,23 @@ export function FeedbackForm({ open, onOpenChange, eventId }: FeedbackFormProps)
 
               {/* Comments Section */}
               <div className="flex flex-col gap-2.5">
-                <textarea
-                  className="w-full h-[120px] bg-white border border-shaded-white shadow-[0px_2px_2px_rgba(0,0,0,0.18)] rounded-[9px] p-2.5 text-xs font-medium text-tinted-black placeholder:text-pale-gray resize-none focus:outline-none focus:border-light-blue"
-                  placeholder="코멘트를 추가하세요"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                  required
-                />
+                <div className="relative w-full h-[120px]">
+                  <textarea
+                    className="w-full h-full bg-white border border-shaded-white shadow-[0px_2px_2px_rgba(0,0,0,0.18)] rounded-[9px] p-[10px] text-xs font-medium text-tinted-black placeholder:text-pale-gray resize-none focus:outline-none focus:border-light-blue"
+                    placeholder="코멘트를 추가하세요"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    required
+                  />
+                  {/* Resize indicator */}
+                  <div className="absolute bottom-[5px] right-[5px] w-[15px] h-[15px] pointer-events-none">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                      <line x1="10" y1="5" x2="5" y2="10" stroke="#777777" strokeWidth="1" />
+                      <line x1="12" y1="7" x2="7" y2="12" stroke="#777777" strokeWidth="1" />
+                      <line x1="14" y1="9" x2="9" y2="14" stroke="#777777" strokeWidth="1" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               {/* Buttons */}

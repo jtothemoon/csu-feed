@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { eventId, content, rating } = body;
+    const { eventId, content, rating, department } = body;
 
     // Validation
     if (!eventId || !content || !rating) {
@@ -58,6 +58,7 @@ export async function POST(request: Request) {
         email_hash: emailHash,
         content,
         rating,
+        department: department || null,
       })
       .select()
       .single();

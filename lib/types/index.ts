@@ -14,5 +14,6 @@ export interface Feedback {
   email_hash: string;
   content: string;
   rating: number;
+  department?: string | null;
   created_at: string;
 }

@@ -4,11 +4,12 @@ import { Star } from "./star";
 interface CommentProps {
   content: string;
   rating?: number; // 1-5
+  department?: string | null;
   createdAt?: string;
   className?: string;
 }
 
-export function Comment({ content, rating, createdAt, className }: CommentProps) {
+export function Comment({ content, rating, department, createdAt, className }: CommentProps) {
   return (
     <div
       className={cn(
@@ -16,6 +17,13 @@ export function Comment({ content, rating, createdAt, className }: CommentProps)
         className
       )}
     >
+      {/* 학과 (옵션) */}
+      {department && (
+        <p className="text-xs font-medium text-medium-gray">
+          {department}
+        </p>
+      )}
+
       {/* 코멘트 텍스트 */}
       <p className="w-full font-medium text-lg leading-[190%] text-center text-tinted-black">
         {content}

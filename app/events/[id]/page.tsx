@@ -57,6 +57,7 @@ export default async function EventDetailPage({ params }: Props) {
                   key={feedback.id}
                   content={feedback.content}
                   rating={feedback.rating}
+                  department={feedback.department}
                   createdAt={feedback.created_at}
                 />
               ))}
