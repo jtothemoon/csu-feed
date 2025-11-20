@@ -6,7 +6,7 @@ export function DetailHeader() {
   const router = useRouter();
 
   return (
-    <header className="flex items-center gap-4 px-6 py-4">
+    <header className="flex items-center gap-2 pl-3 pr-6 py-4">
       <button
         onClick={() => router.back()}
         className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-shaded-white transition-colors"
